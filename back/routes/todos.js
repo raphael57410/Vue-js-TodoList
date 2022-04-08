@@ -2,12 +2,12 @@ const express = require('express');
 
 const router = express.Router();
 
-const verifyParams = require('../controllers/todos');
+const verifyJWT = require('../middleware/verifyJWT');
 
 const todosCtrl = require('../controllers/todos');
 
 
-router.get('/', todosCtrl.list);
+router.get('/', [verifyJWT], todosCtrl.list);
 
 router.post('/add', todosCtrl.add);
 

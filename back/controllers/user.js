@@ -17,6 +17,9 @@ exports.user = async (req, res) => {
         // si un user et trouvé on le renvoi avec le token
         if (user.length) res.status(200).send({ user, token });
 
+        if (!user.length) res.status(401).send({ user, message: 'email n\'est pas dans la base de donnée' });
+
+
     } catch (e) {
         res.status(400).send('erreur' + e);
     }

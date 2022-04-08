@@ -46,7 +46,12 @@
     <form
       class="flex flex-col m-5"
       method="POST"
-      v-on:submit.prevent="onSubmit(email)"
+      v-on:submit.prevent="
+        () => {
+          onSubmit(email);
+          email = '';
+        }
+      "
     >
       <label class="text-center" for="email">Qui êtes-vous ?</label>
       <input

@@ -1,17 +1,20 @@
 import axios from "axios";
 
+const TOKEN = localStorage.getItem('TOKEN');
+
 export const connectRequest = async (email) => {
     return await axios.post("http://localhost:3000/api/v1/users/login", { body: { email } })
         .then((response) => {
-            return response.status;
+            localStorage.setItem('TOKEN', response.data.token)
+            return response;
         })
         .catch((error) => {
-            console.log("Error fetch", error);
+            return error;
         });
 }
 
 export const fetchAllRequest = (storeDispatch) => {
-    axios.get("http://localhost:3000/api/v1/todos")
+    axios.get("http://localhost:3000/api/v1/todos", { headers: { Authorization: `Bearer ${TOKEN}` } })
         .then((response) => {
             storeDispatch("initData", response.data.reverse());
         })

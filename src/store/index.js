@@ -52,9 +52,11 @@ const store = new Vuex.Store({
       removeTodoRequest(todoId);
     },
     async onSubmit(state, email) {
+
       //! mettre le state a true si on trouve un user ne fonctionne pas
-      const userAuth = await connectRequest(email);
-      if (userAuth === 200) state.isConnected = true;
+      const response = await connectRequest(email);
+
+      if (response) if (response.status === 200) state.isConnected = true;
     },
   },
   actions: {
