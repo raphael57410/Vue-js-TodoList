@@ -48,9 +48,6 @@ export default {
       description: this.$props.todo.description,
     };
   },
-  updated() {
-    console.log("update");
-  },
   props: {
     todo: Object,
   },

@@ -21,6 +21,8 @@ mongose.connect('mongodb://' + cluster + '/' + db,
     .catch((e) => console.log(e, 'connexion failed'));
 
 const todosRoutes = require('./routes/todos');
+const userRoutes = require('./routes/user');
+
 const app = express();
 
 app.use(express.json());
@@ -34,5 +36,7 @@ app.use('/ping', (req, res) => {
 });
 
 app.use('/api/v1/todos', todosRoutes);
+app.use('/api/v1/users', userRoutes);
+
 
 module.exports = app;

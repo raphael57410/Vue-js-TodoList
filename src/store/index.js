@@ -1,12 +1,13 @@
 import Vue from "vue"
 import Vuex from "vuex"
 // import { getData, } from '../../services/persistService';
-import { addTodoRequest, editTodoRequest, removeTodoRequest } from '@/requests';
+import { addTodoRequest, editTodoRequest, removeTodoRequest, connectRequest } from '@/requests';
 
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
+    isConnected: false,
     currentPage: 1,
     pageSize: 5,
     todos: [],
@@ -49,7 +50,12 @@ const store = new Vuex.Store({
     removeTodo(state, todoId) {
       state.todos.splice(state.todos.findIndex(todo => todo._id === todoId), 1);
       removeTodoRequest(todoId);
-    }
+    },
+    async onSubmit(state, email) {
+      //! mettre le state a true si on trouve un user ne fonctionne pas
+      const userAuth = await connectRequest(email);
+      if (userAuth === 200) state.isConnected = true;
+    },
   },
   actions: {
     initData({ commit }, initialTodos) {
@@ -78,6 +84,10 @@ const store = new Vuex.Store({
     removeTodo({ commit }, todoId) {
       commit("removeTodo", todoId);
       //setData("todos", state.todos);
+    },
+    onSubmit({ commit }, email) {
+
+      commit("onSubmit", email);
     },
   },
 });
